@@ -32,8 +32,8 @@ for filename in os.listdir(input_directory):
         row_index = 12
         while sheet[f"B{row_index}"].value != "Total":
             openPositionList.append({
-                "Data": sheet[f"F{row_index}"].value,
-                "Wartość": str(sheet[f"G{row_index}"].value).replace(".", ","),
+                "Data": sheet[f"F{row_index}"].value.strftime('%Y-%m-%d %H:%M:%S'),
+                "Wartość": str(sheet[f"I{row_index}"].value).replace(".", ","),
                 "Uwaga": sheet[f"Q{row_index}"].value,
                 "Podatki": "",
                 "Konto przeciwstawne": "",
@@ -70,8 +70,8 @@ for filename in os.listdir(input_directory):
         csv_path = os.path.join(output_directory, csv_filename)
 
         # Save the data to a CSV file
-        with open(csv_path, 'w', newline='', encoding="utf-8") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=openPositionList[0].keys(), delimiter=';')
+        with open(csv_path, 'w', newline='', encoding="utf-8") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=openPositionList[0].keys(), delimiter=';')
             writer.writeheader()
             for row in openPositionList:
                 writer.writerow(row)
